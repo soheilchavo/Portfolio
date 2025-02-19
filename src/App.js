@@ -6,6 +6,8 @@ import profilePic from './Assets/ProfilePic.jpeg';
 import normalNetImage1 from './Assets/NormalNetArch.png';
 import normalNetImage2 from './Assets/NormalNetShowcase.png';
 import normalNetImage3 from './Assets/NormalNetMaps.png';
+import neuralClassImage1 from './Assets/NeuralClassNet.png';
+import neuralClassImage2 from './Assets/NeuralClassParameters.png';
 
 /* Color variables */
 const primaryCol = 'rgb(53, 221, 221)';
@@ -34,7 +36,7 @@ function App() {
         <a href="#about" style={styles.navLink} className="smooth_scroll thin_text primary_secondary_hover">
           About
         </a>
-        <a href="#projects" style={styles.navLink} className="smooth_scroll thin_text primary_secondary_hover">
+        <a href="#softwareprojects" style={styles.navLink} className="smooth_scroll thin_text primary_secondary_hover">
           Projects
         </a>
         <a href="#contact" style={styles.navLink} className="smooth_scroll thin_text primary_secondary_hover">
@@ -65,9 +67,9 @@ function App() {
       </header>
 
       {/* PROJECTS SECTION */}
-      <section id="projects" style={styles.section}>
+      <section id="softwareprojects" style={styles.section}>
         <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">
-          Project Showcase
+          Software Projects
         </h2>
 
         {/* NormalNet Card with Freeform Images */}
@@ -137,25 +139,22 @@ function App() {
             </div>
           </div>
         </div>
-        {/* NormalNet Card with Freeform Images */}
+        {/* NeuralClass Card with Freeform Images */}
         <div style={styles.projectCard}>
           {/* Left Column (Text) */}
           <div style={styles.leftColumn}>
             <h3 style={styles.projectTitle} className="thick_text">
-              NormalNet - Generative ML Model
+              NeuralClass: Custom Neural Network Engine and Visualizer
             </h3>
             <p style={styles.projectDescription} className="thin_text">
-              A <mark className='marked_quaternary thick_text'>Generative AI model</mark> created with <mark className='marked_tertiary thick_text'>PyTorch</mark> and <mark className='marked_tertiary thick_text'>NumPy</mark>. 
-              <br></br>
-              Designed to create PBR materials from diffuse textures.This project uses a <mark className='marked_quaternary thick_text'>GAN architecture</mark> to
-              produce maps for 3D materials, <mark className='marked_primary thick_text'> reducing memmory ussage by up to 5x as
-              traditional methods </mark> of storing large PBR packs. <br></br> <br></br>
-              The project is available on GitHub as an open-source means for users to
-              train their own models, as well as a <mark className='marked_tertiary thick_text'>Blender</mark> plugin created with <mark className='marked_tertiary thick_text'>Python</mark> to 
-              empower 3D artists to create professional renders fast.
+              NeuralClass is a <mark className='marked_primary thick_text'>ML software</mark> created in <mark className='marked_tertiary thick_text'>Processing Java</mark>. Users are able
+              to create their own <mark className='marked_secondary thick_text'>MLP's and train them on any dataset</mark>. The project uses no
+              dependencies, and all algorithms were programmed from scratch, including backpropagation.
+              <br></br><br></br>
+              <mark className='marked_quaternary thick_text'>Achieved 80% accuracy on the validation dataset for MNIST.</mark>
             </p>
             <a
-              href="https://github.com/soheilchavo/NormalNet"
+              href="https://github.com/soheilchavo/NeuralClass"
               target="_blank"
               rel="noopener noreferrer"
               style={styles.link}
@@ -169,33 +168,75 @@ function App() {
           <div style={styles.rightColumn}>
             <div style={styles.imagesContainer}>
               <img
-                src={normalNetImage1}
-                alt="NormalNet Image 1"
+                src={neuralClassImage1}
+                alt="NeuralClass Image 1"
                 onClick={() => handleImageClick('image1')}
                 style={{
-                  ...styles.freeformImage1,
+                  ...styles.freeformImage4,
                   ...(enlarged === 'image1' ? styles.enlargedImage : {}),
                 }}
                 className="slightly_enlarge_hover float_y"
                 title="Click Me!"
               />
               <img
-                src={normalNetImage2}
-                alt="NormalNet Image 2"
-                onClick={() => handleImageClick('image2')}
+                src={neuralClassImage2}
+                alt="NeuralClass Image 2"
+                onClick={() => handleImageClick('image3')}
                 style={{
-                  ...styles.freeformImage2,
-                  ...(enlarged === 'image2' ? styles.enlargedImage : {}),
+                  ...styles.freeformImage5,
+                  ...(enlarged === 'image3' ? styles.enlargedImage : {}),
+                }}
+                className="slightly_enlarge_hover float_y"
+                title="Click Me!"
+              />
+            </div>
+          </div>
+        </div>
+        {/* PrismRenderer Card with Freeform Images */}
+        <div style={styles.projectCard}>
+          {/* Left Column (Text) */}
+          <div style={styles.leftColumn}>
+            <h3 style={styles.projectTitle} className="thick_text">
+              PrismRenderer: Custom 3D Renderer
+            </h3>
+            <p style={styles.projectDescription} className="thin_text">
+              NeuralClass is a <mark className='marked_primary thick_text'>ML software</mark> created in <mark className='marked_tertiary thick_text'>Processing Java</mark>. Users are able
+              to create their own <mark className='marked_secondary thick_text'>MLP's and train them on any dataset</mark>. The project uses no
+              dependencies, and all algorithms were programmed from scratch, including backpropagation.
+              <br></br><br></br>
+              <mark className='marked_quaternary thick_text'>Achieved 80% accuracy on the validation dataset for MNIST.</mark>
+            </p>
+            <a
+              href="https://github.com/soheilchavo/NeuralClass"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={styles.link}
+              className='thick_text'
+            >
+              GitHub Repo
+            </a>
+          </div>
+
+          {/* Right Column (Freeform Images) */}
+          <div style={styles.rightColumn}>
+            <div style={styles.imagesContainer}>
+              <img
+                src={neuralClassImage1}
+                alt="NeuralClass Image 1"
+                onClick={() => handleImageClick('image1')}
+                style={{
+                  ...styles.freeformImage4,
+                  ...(enlarged === 'image1' ? styles.enlargedImage : {}),
                 }}
                 className="slightly_enlarge_hover float_y"
                 title="Click Me!"
               />
               <img
-                src={normalNetImage3}
-                alt="NormalNet Image 3"
+                src={neuralClassImage2}
+                alt="NeuralClass Image 2"
                 onClick={() => handleImageClick('image3')}
                 style={{
-                  ...styles.freeformImage3,
+                  ...styles.freeformImage5,
                   ...(enlarged === 'image3' ? styles.enlargedImage : {}),
                 }}
                 className="slightly_enlarge_hover float_y"
@@ -406,6 +447,30 @@ const styles = {
     top: '0px',
     left: '290px',
     width: '190px',
+    height: 'auto',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
+    boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
+    zIndex: 10
+  },
+  freeformImage4: {
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
+    width: '280px',
+    height: 'auto',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
+    boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
+    zIndex: 10
+  },
+  freeformImage5: {
+    position: 'absolute',
+    top: '40px',
+    left: '310px',
+    width: '140px',
     height: 'auto',
     borderRadius: '8px',
     cursor: 'pointer',
