@@ -8,6 +8,9 @@ import normalNetImage2 from './Assets/NormalNetShowcase.png';
 import normalNetImage3 from './Assets/NormalNetMaps.png';
 import neuralClassImage1 from './Assets/NeuralClassNet.png';
 import neuralClassImage2 from './Assets/NeuralClassParameters.png';
+import firefighterImage1 from './Assets/FirefighterPCB.png';
+import firefighterImage2 from './Assets/FirefighterBoard.png';
+import firefighterImage3 from './Assets/FirefighterRobot.png';
 
 /* Color variables */
 const primaryCol = 'rgb(53, 221, 221)';
@@ -41,7 +44,10 @@ function App() {
           About
         </a>
         <a href="#softwareprojects" style={styles.navLink} className="smooth_scroll thin_text primary_secondary_hover">
-          Projects
+          Software Projects
+        </a>
+        <a href="#hardwareprojects" style={styles.navLink} className="smooth_scroll thin_text primary_secondary_hover">
+          Hardware Projects
         </a>
         <a href="#contact" style={styles.navLink} className="smooth_scroll thin_text primary_secondary_hover">
           Contact
@@ -196,51 +202,63 @@ function App() {
             </div>
           </div>
         </div>
-        {/* PrismRenderer Card with Freeform Images */}
+      </section>
+
+
+      {/* HARDWARE PROJECTS SECTION */}
+      <section id="hardwareprojects" style={styles.section}>
+        <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">
+          Hardware Projects
+        </h2>
+
+        {/* NormalNet Card with Freeform Images */}
         <div style={styles.projectCard}>
           {/* Left Column (Text) */}
           <div style={styles.leftColumn}>
             <h3 style={styles.projectTitle} className="thick_text">
-              PrismRenderer: Custom 3D Renderer
+              Autonomous Firefighter Robot
             </h3>
             <p style={styles.projectDescription} className="thin_text">
-              NeuralClass is a <mark className='marked_primary thick_text'>ML software</mark> created in <mark className='marked_tertiary thick_text'>Processing Java</mark>. Users are able
-              to create their own <mark className='marked_secondary thick_text'>MLP's and train them on any dataset</mark>. The project uses no
-              dependencies, and all algorithms were programmed from scratch, including backpropagation.
+              Designed three <mark className='marked_primary thick_text'>PCBs</mark>, including a motherboard, motor board, and sensor board, using <mark className='marked_tertiary thick_text'>TraxMaker</mark> and <mark className='marked_tertiary thick_text'>KiCad</mark>
+              , <mark className='marked_secondary thick_text'>Soldered components</mark>, built the robot's body through woodworking, debugged sensors and components with a multimeter.
               <br></br><br></br>
-              <mark className='marked_quaternary thick_text'>Achieved 80% accuracy on the validation dataset for MNIST.</mark>
+              Programmed IC’s in <mark className='marked_quaternary thick_text'>C</mark> to function cohesively, and
+              developed a maze-solving algorithm that enabled the robot to navigate and extinguish randomly placed candles
+
             </p>
-            <a
-              href="https://github.com/soheilchavo/NeuralClass"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.link}
-              className='thick_text'
-            >
-              GitHub Repo
-            </a>
           </div>
 
           {/* Right Column (Freeform Images) */}
           <div style={styles.rightColumn}>
             <div style={styles.imagesContainer}>
               <img
-                src={neuralClassImage1}
-                alt="NeuralClass Image 1"
+                src={firefighterImage1}
+                alt="Firefighter Image 1"
                 onClick={() => handleImageClick('image1')}
                 style={{
-                  ...styles.freeformImage4,
+                  ...styles.freeformImage1,
                   ...(enlarged === 'image1' ? styles.enlargedImage : {}),
                 }}
                 className="slightly_enlarge_hover float_y"
                 title="Click Me!"
               />
               <img
-                src={neuralClassImage2}
-                alt="NeuralClass Image 2"
+                src={firefighterImage2}
+                alt="Firefighter Image 1"
+                onClick={() => handleImageClick('image2')}
+                style={{
+                  ...styles.freeformImage2,
+                  ...(enlarged === 'image2' ? styles.enlargedImage : {}),
+                }}
+                className="slightly_enlarge_hover float_y"
+                title="Click Me!"
+              />
+              <img
+                src={firefighterImage3}
+                alt="Firefighter Image 3"
                 onClick={() => handleImageClick('image3')}
                 style={{
-                  ...styles.freeformImage5,
+                  ...styles.freeformImage3,
                   ...(enlarged === 'image3' ? styles.enlargedImage : {}),
                 }}
                 className="slightly_enlarge_hover float_y"
