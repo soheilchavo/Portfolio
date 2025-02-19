@@ -1,38 +1,64 @@
-.App {
-  text-align: center;
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+
+:root {
+  --primaryCol: rgb(53, 221, 221);
+  --darkPrimaryCol: rgb(5, 30, 30);
+  --secondaryCol: rgb(227, 97, 32);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.thin_text {
+  font-family: "Comfortaa", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.thick_text {
+  font-family: "Comfortaa", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.slightly_enlarge_hover {
+  transform: scale(1.0);
+  transition-duration: 0.15s;
+}
+.slightly_enlarge_hover:hover {
+  transform: scale(1.05);
+  transition-duration: 0.25s;
+}
+
+.primary_secondary_hover {
+  transition-duration: 1s;
   color: white;
+  animation: none;
+}
+.primary_secondary_hover:hover {
+  transition-duration: 1s;
+  color: var(--secondaryCol);
+  animation: wave 0.6s ease-in-out infinite;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@keyframes wave {
+  0%, 100% {
+      transform: translateY(0);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+      transform: translateY(-1px);
+  }
+}
+
+.breathe-background {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    filter: brightness(0.9);
+  }
+  50% {
+    filter: brightness(1.0);
   }
 }
