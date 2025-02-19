@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/Portfolio/static/css/main.3f1a1e3d.css",
+    "main.js": "/Portfolio/static/js/main.2d0e2df3.js",
+    "static/js/453.1407b060.chunk.js": "/Portfolio/static/js/453.1407b060.chunk.js",
+    "static/media/NormalNetMaps.png": "/Portfolio/static/media/NormalNetMaps.2862734957a983ff7228.png",
+    "static/media/FirefighterBoard.png": "/Portfolio/static/media/FirefighterBoard.78791672e9a1459ff0d6.png",
+    "static/media/FirefighterPCB.png": "/Portfolio/static/media/FirefighterPCB.aeb7e58d098a134f4269.png",
+    "static/media/FirefighterRobot.png": "/Portfolio/static/media/FirefighterRobot.dcdfb6b3a8f8a53bec7a.png",
+    "static/media/NeuralClassNet.png": "/Portfolio/static/media/NeuralClassNet.47844423f0f0b3f2ee35.png",
+    "static/media/NeuralClassParameters.png": "/Portfolio/static/media/NeuralClassParameters.6fd5eb7473ae744605d5.png",
+    "static/media/NormalNetShowcase.png": "/Portfolio/static/media/NormalNetShowcase.b57701181fd54ddeb25a.png",
+    "static/media/NormalNetArch.png": "/Portfolio/static/media/NormalNetArch.9a12fc70d8801830fccf.png",
+    "static/media/ProfilePic.jpeg": "/Portfolio/static/media/ProfilePic.94eafa43f28d86b3785d.jpeg",
+    "index.html": "/Portfolio/index.html",
+    "main.3f1a1e3d.css.map": "/Portfolio/static/css/main.3f1a1e3d.css.map",
+    "main.2d0e2df3.js.map": "/Portfolio/static/js/main.2d0e2df3.js.map",
+    "453.1407b060.chunk.js.map": "/Portfolio/static/js/453.1407b060.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3f1a1e3d.css",
+    "static/js/main.2d0e2df3.js"
+  ]
+}
