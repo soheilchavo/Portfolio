@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 /* Replace these with your actual imports */
@@ -29,6 +29,10 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    document.title = 'Soheil Chavoshi Portfolio';
+  }, []);
+
   return (
     <div style={styles.container}>
       {/* NAVIGATION BAR */}
@@ -58,9 +62,9 @@ function App() {
               Soheil Chavoshi
             </h1>
             <p style={styles.tldrText} className="thin_text">
-              First-year university student passionate about AI, computer vision,
-              and electronics. I love creating projects that merge creativity and technology,
-              from generative AI to custom neural network visualizers.
+              First-year Computer Engineering student at Queen's University.
+              I love programming, robotics, 3d Printing, and just creating cool stuff. 
+              Check out some of my projects below, and reach out using my email.
             </p>
           </div>
         </div>
@@ -420,9 +424,9 @@ const styles = {
   /* Freeform Images */
   freeformImage1: {
     position: 'absolute',
-    top: '0px',
-    left: '0px',
-    width: '260px',
+    top: '2%',
+    left: '9%',
+    width: '40%',
     height: 'auto',
     borderRadius: '8px',
     cursor: 'pointer',
@@ -432,9 +436,9 @@ const styles = {
   },
   freeformImage2: {
     position: 'absolute',
-    top: '160px',
-    left: '170px',
-    width: '250px',
+    top: '50%',
+    left: '35%',
+    width: '30%',
     height: 'auto',
     borderRadius: '8px',
     cursor: 'pointer',
@@ -445,8 +449,8 @@ const styles = {
   freeformImage3: {
     position: 'absolute',
     top: '0px',
-    left: '290px',
-    width: '190px',
+    left: '55%',
+    width: '30%',
     height: 'auto',
     borderRadius: '8px',
     cursor: 'pointer',
@@ -456,9 +460,9 @@ const styles = {
   },
   freeformImage4: {
     position: 'absolute',
-    top: '0px',
-    left: '0px',
-    width: '280px',
+    top: '0%',
+    left: '0%',
+    width: '40%',
     height: 'auto',
     borderRadius: '8px',
     cursor: 'pointer',
@@ -468,9 +472,9 @@ const styles = {
   },
   freeformImage5: {
     position: 'absolute',
-    top: '40px',
-    left: '310px',
-    width: '140px',
+    top: '0%',
+    left: '50%',
+    width: '20%',
     height: 'auto',
     borderRadius: '8px',
     cursor: 'pointer',
