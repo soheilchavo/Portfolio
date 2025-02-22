@@ -18,16 +18,16 @@ const darkPrimaryCol = 'rgb(5, 30, 30)';
 const darkPrimaryCol2 = 'rgb(25, 40, 40)';
 const darkPrimaryCol3 = 'rgb(22, 37, 37)';
 const secondaryCol = 'rgb(200, 80, 66)';
+const grey1 = 'rgb(20, 27, 28)';
 
-const grey1 = 'rgb(25, 25, 30)';
-
-/* 
+/*
   ProjectCard component:
   - Tracks its own gradient position state.
   - Updates the card background with a radial gradient that follows the mouse
     relative to the card’s own container.
+  - Displays images in a grid gallery to fill the entire right column.
 */
-const ProjectCard = ({ title, description, link, images }) => {
+function ProjectCard({ title, description, link, images }) {
   const [gradientPos, setGradientPos] = useState({ x: 50, y: 50 });
   const cardDamping = 0.3; // adjust damping for the card's gradient
 
@@ -38,12 +38,12 @@ const ProjectCard = ({ title, description, link, images }) => {
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     setGradientPos((prev) => ({
       x: prev.x + cardDamping * (x - prev.x),
-      y: prev.y + cardDamping * (y - prev.y)
+      y: prev.y + cardDamping * (y - prev.y),
     }));
   };
 
   const cardBackground = {
-    background: `radial-gradient(circle at ${gradientPos.x}% ${gradientPos.y}%, ${grey1} 0%, ${darkPrimaryCol3} 97%)`
+    background: `radial-gradient(circle at ${gradientPos.x}% ${gradientPos.y}%, ${grey1} 0%, ${darkPrimaryCol3} 97%)`,
   };
 
   return (
@@ -60,8 +60,10 @@ const ProjectCard = ({ title, description, link, images }) => {
         </div>
         {link}
       </div>
+
+      {/* GALLERY on the right side */}
       <div style={styles.rightColumn}>
-        <div style={styles.imagesContainer}>
+        <div style={styles.galleryGrid}>
           {images.map((img, idx) => (
             <img
               key={idx}
@@ -69,15 +71,15 @@ const ProjectCard = ({ title, description, link, images }) => {
               alt={img.alt}
               title={img.title}
               onClick={img.onClick}
-              style={{ ...styles.freeformImage, ...img.style }}
               className="circular_image slightly_enlarge_hover float_y"
+              style={styles.galleryImage}
             />
           ))}
         </div>
       </div>
     </div>
   );
-};
+}
 
 function App() {
   // Lightbox state for full-screen image viewing
@@ -92,7 +94,7 @@ function App() {
     const y = (e.clientY / window.innerHeight) * 100;
     setHeroGradientPos((prev) => ({
       x: prev.x + heroDamping * (x - prev.x),
-      y: prev.y + heroDamping * (y - prev.y)
+      y: prev.y + heroDamping * (y - prev.y),
     }));
   };
 
@@ -104,6 +106,7 @@ function App() {
     document.title = 'Soheil Chavoshi Portfolio';
   }, []);
 
+  // Hero background gradient
   const heroBackground = {
     background: `radial-gradient(circle at ${heroGradientPos.x}% ${heroGradientPos.y}%, ${primaryCol} 0%, ${secondaryCol} 97%)`,
   };
@@ -141,7 +144,9 @@ function App() {
             style={styles.profilePic}
           />
           <div style={styles.tldrContainer}>
-            <h1 style={styles.title} className="thick_text">Soheil Chavoshi</h1>
+            <h1 style={styles.title} className="thick_text">
+              Soheil Chavoshi
+            </h1>
             <p style={styles.tldrText} className="thin_text">
               First-year Computer Engineering student at Queen's University.
               I love programming, robotics, 3D printing, and just creating cool stuff.
@@ -156,15 +161,20 @@ function App() {
         <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">
           Software Projects
         </h2>
+
+        {/* NormalNet Card */}
         <ProjectCard
           title="NormalNet - Generative ML Model"
           description={
             <>
               A <mark className="marked_quaternary thick_text">Generative AI model</mark> created with <mark className="marked_tertiary thick_text">PyTorch</mark> and <mark className="marked_tertiary thick_text">NumPy</mark>.
               <br />
-              Designed to create PBR materials from diffuse textures. This project uses a <mark className="marked_quaternary thick_text">GAN architecture</mark> to produce maps for 3D materials, <mark className="marked_primary thick_text">reducing memory usage</mark> significantly compared to large PBR packs.
+              Designed to create PBR materials from diffuse textures. This project uses a <mark className="marked_quaternary thick_text">GAN architecture</mark> to
+              produce maps for 3D materials, <mark className="marked_primary thick_text">reducing memory usage</mark> significantly compared to large PBR packs.
               <br /><br />
-              The project is available on GitHub as an open-source means for users to train their own models, as well as a <mark className="marked_tertiary thick_text">Blender</mark> plugin created with <mark className="marked_tertiary thick_text">Python</mark> to empower 3D artists to create professional renders fast.
+              The project is available on GitHub as an open-source means for users to
+              train their own models, as well as a <mark className="marked_tertiary thick_text">Blender</mark> plugin created with <mark className="marked_tertiary thick_text">Python</mark> to
+              empower 3D artists to create professional renders fast.
             </>
           }
           link={
@@ -184,30 +194,30 @@ function App() {
               alt: 'NormalNet Image 1',
               title: 'Click Me!',
               onClick: () => handleImageClick(normalNetImage1),
-              style: { top: '2%', left: '9%', width: '40%' },
             },
             {
               src: normalNetImage2,
               alt: 'NormalNet Image 2',
               title: 'Click Me!',
               onClick: () => handleImageClick(normalNetImage2),
-              style: { top: '50%', left: '35%', width: '30%' },
             },
             {
               src: normalNetImage3,
               alt: 'NormalNet Image 3',
               title: 'Click Me!',
               onClick: () => handleImageClick(normalNetImage3),
-              style: { top: '0%', left: '55%', width: '30%' },
             },
           ]}
         />
 
+        {/* NeuralClass Card */}
         <ProjectCard
           title="NeuralClass: Custom Neural Network Engine and Visualizer"
           description={
             <>
-              NeuralClass is a <mark className="marked_primary thick_text">ML software</mark> created in <mark className="marked_tertiary thick_text">Processing Java</mark>. Users can create their own <mark className="marked_secondary thick_text">MLP's and train them on any dataset</mark>. The project uses no external dependencies; all algorithms were coded from scratch, including backpropagation.
+              NeuralClass is a <mark className="marked_primary thick_text">ML software</mark> created in <mark className="marked_tertiary thick_text">Processing Java</mark>. Users can
+              create their own <mark className="marked_secondary thick_text">MLP's and train them on any dataset</mark>.
+              The project uses no external dependencies; all algorithms were coded from scratch, including backpropagation.
               <br /><br />
               <mark className="marked_quaternary thick_text">Achieved 80% accuracy on the validation dataset for MNIST.</mark>
             </>
@@ -229,14 +239,12 @@ function App() {
               alt: 'NeuralClass Image 1',
               title: 'Click Me!',
               onClick: () => handleImageClick(neuralClassImage1),
-              style: { top: '0%', left: '0%', width: '40%' },
             },
             {
               src: neuralClassImage2,
               alt: 'NeuralClass Image 2',
               title: 'Click Me!',
               onClick: () => handleImageClick(neuralClassImage2),
-              style: { top: '0%', left: '50%', width: '20%' },
             },
           ]}
         />
@@ -247,13 +255,16 @@ function App() {
         <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">
           Hardware Projects
         </h2>
+
         <ProjectCard
           title="Autonomous Firefighter Robot"
           description={
             <>
-              Designed three <mark className="marked_primary thick_text">PCBs</mark> (motherboard, motor board, sensor board) using <mark className="marked_tertiary thick_text">TraxMaker</mark> & <mark className="marked_tertiary thick_text">KiCad</mark>. Soldered components, built the robot body via woodworking, and debugged with a multimeter.
+              Designed three <mark className="marked_primary thick_text">PCBs</mark> (motherboard, motor board, sensor board) using <mark className="marked_tertiary thick_text">TraxMaker</mark> & <mark className="marked_tertiary thick_text">KiCad</mark>.
+              Soldered components, built the robot body via woodworking, and debugged with a multimeter.
               <br /><br />
-              Programmed IC’s in <mark className="marked_quaternary thick_text">C</mark> for cohesive operation, and implemented a maze-solving algorithm to navigate and extinguish randomly placed candles.
+              Programmed IC’s in <mark className="marked_quaternary thick_text">C</mark> for cohesive operation, and
+              implemented a maze-solving algorithm to navigate and extinguish randomly placed candles.
             </>
           }
           images={[
@@ -262,21 +273,18 @@ function App() {
               alt: 'Firefighter Image 1',
               title: 'Click Me!',
               onClick: () => handleImageClick(firefighterImage1),
-              style: { top: '2%', left: '9%', width: '40%' },
             },
             {
               src: firefighterImage2,
               alt: 'Firefighter Image 2',
               title: 'Click Me!',
               onClick: () => handleImageClick(firefighterImage2),
-              style: { top: '50%', left: '35%', width: '30%' },
             },
             {
               src: firefighterImage3,
               alt: 'Firefighter Image 3',
               title: 'Click Me!',
               onClick: () => handleImageClick(firefighterImage3),
-              style: { top: '0%', left: '55%', width: '30%' },
             },
           ]}
         />
@@ -303,7 +311,7 @@ function App() {
         </ul>
       </section>
 
-      {/* LIGHTBOX */}
+      {/* LIGHTBOX (only shown if lightboxImage is not null) */}
       {lightboxImage && (
         <div style={styles.lightboxOverlay} onClick={closeLightbox}>
           <div style={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
@@ -405,17 +413,8 @@ const styles = {
     textAlign: 'center',
     padding: 0,
   },
-  projectDescription: {
-    marginTop: 0,
-    marginBottom: '0.5rem',
-    color: 'white',
-    lineHeight: '200%',
-  },
-  link: {
-    color: '#007BFF',
-    textDecoration: 'none',
-  },
-  /* Project Card container uses a gradient defined within ProjectCard component */
+
+  /* ProjectCard styles */
   projectCard: {
     margin: '1rem 0',
     padding: '1rem',
@@ -426,19 +425,30 @@ const styles = {
     gap: '1rem',
   },
   leftColumn: {
-    flex: '1',
+    flex: 1,
     marginRight: '1rem',
     color: '#fff',
   },
   rightColumn: {
-    flex: '1',
-    position: 'relative',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
-  /* Use the "padding-top" trick for a responsive aspect ratio */
-  imagesContainer: {
+  galleryGrid: {
+    display: 'grid',
+    /* 2 columns min; auto-fit will add more columns if there's space */
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '1rem',
     width: '100%',
-    position: 'relative',
-    paddingTop: '60%', // Adjust to change aspect ratio
+  },
+  galleryImage: {
+    width: '100%',
+    maxHeight: '40vh',
+    height: 'auto',
+    objectFit: 'cover',
+    cursor: 'pointer',
+    boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
   },
   projectTitle: {
     marginTop: 0,
@@ -448,14 +458,18 @@ const styles = {
     fontWeight: 'bold',
     textDecoration: 'underline 1px',
   },
-  /* Base style for freeform images; additional positioning is passed in via the image object */
-  freeformImage: {
-    position: 'absolute',
-    cursor: 'pointer',
-    transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
-    boxShadow: '0 5px 8px rgba(0,0,0,0.5)',
-    zIndex: 10,
+  projectDescription: {
+    marginTop: 0,
+    marginBottom: '0.5rem',
+    color: 'white',
+    lineHeight: '200%',
   },
+  link: {
+    color: '#007BFF',
+    textDecoration: 'none',
+  },
+
+  /* Lightbox Styles */
   lightboxOverlay: {
     position: 'fixed',
     top: 0,
