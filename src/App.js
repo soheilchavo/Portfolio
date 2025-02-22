@@ -16,26 +16,97 @@ import firefighterImage3 from './Assets/FirefighterRobot.png';
 const primaryCol = 'rgb(53, 221, 221)';
 const darkPrimaryCol = 'rgb(5, 30, 30)';
 const darkPrimaryCol2 = 'rgb(25, 40, 40)';
-const darkPrimaryCol3 = 'rgb(55, 70, 70)';
+const darkPrimaryCol3 = 'rgb(22, 37, 37)';
 const secondaryCol = 'rgb(200, 80, 66)';
 
-const img_border_radius = '100%';
-const hover_border_radius = '5%';
+const grey1 = 'rgb(25, 25, 30)';
+
+/* 
+  ProjectCard component:
+  - Tracks its own gradient position state.
+  - Updates the card background with a radial gradient that follows the mouse
+    relative to the card’s own container.
+*/
+const ProjectCard = ({ title, description, link, images }) => {
+  const [gradientPos, setGradientPos] = useState({ x: 50, y: 50 });
+  const cardDamping = 0.3; // adjust damping for the card's gradient
+
+  // Handle mouse movement within this card
+  const handleCardMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setGradientPos((prev) => ({
+      x: prev.x + cardDamping * (x - prev.x),
+      y: prev.y + cardDamping * (y - prev.y)
+    }));
+  };
+
+  const cardBackground = {
+    background: `radial-gradient(circle at ${gradientPos.x}% ${gradientPos.y}%, ${grey1} 0%, ${darkPrimaryCol3} 97%)`
+  };
+
+  return (
+    <div
+      style={{ ...styles.projectCard, ...cardBackground }}
+      onMouseMove={handleCardMouseMove}
+    >
+      <div style={styles.leftColumn}>
+        <h3 style={styles.projectTitle} className="thick_text">
+          {title}
+        </h3>
+        <div style={styles.projectDescription} className="thin_text">
+          {description}
+        </div>
+        {link}
+      </div>
+      <div style={styles.rightColumn}>
+        <div style={styles.imagesContainer}>
+          {images.map((img, idx) => (
+            <img
+              key={idx}
+              src={img.src}
+              alt={img.alt}
+              title={img.title}
+              onClick={img.onClick}
+              style={{ ...styles.freeformImage, ...img.style }}
+              className="circular_image slightly_enlarge_hover float_y"
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 function App() {
+  // Lightbox state for full-screen image viewing
   const [lightboxImage, setLightboxImage] = useState(null);
 
-  const handleImageClick = (imgUrl) => {
-    setLightboxImage(imgUrl);
+  // For the hero gradient tracking the mouse
+  const [heroGradientPos, setHeroGradientPos] = useState({ x: 50, y: 50 });
+  const heroDamping = 0.1;
+
+  const handleHeroMouseMove = (e) => {
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+    setHeroGradientPos((prev) => ({
+      x: prev.x + heroDamping * (x - prev.x),
+      y: prev.y + heroDamping * (y - prev.y)
+    }));
   };
 
-  const closeLightbox = () => {
-    setLightboxImage(null);
-  };
+  // Lightbox handlers
+  const handleImageClick = (imgUrl) => setLightboxImage(imgUrl);
+  const closeLightbox = () => setLightboxImage(null);
 
   useEffect(() => {
     document.title = 'Soheil Chavoshi Portfolio';
   }, []);
+
+  const heroBackground = {
+    background: `radial-gradient(circle at ${heroGradientPos.x}% ${heroGradientPos.y}%, ${primaryCol} 0%, ${secondaryCol} 97%)`,
+  };
 
   return (
     <div style={styles.container}>
@@ -56,7 +127,12 @@ function App() {
       </nav>
 
       {/* HERO / TOP SECTION */}
-      <header id="about" style={styles.header} className="breathe-background">
+      <header
+        id="about"
+        style={{ ...styles.header, ...heroBackground }}
+        onMouseMove={handleHeroMouseMove}
+        className="breathe-background"
+      >
         <div style={styles.headerContent}>
           <img
             src={profilePic}
@@ -65,9 +141,7 @@ function App() {
             style={styles.profilePic}
           />
           <div style={styles.tldrContainer}>
-            <h1 style={styles.title} className="thick_text">
-              Soheil Chavoshi
-            </h1>
+            <h1 style={styles.title} className="thick_text">Soheil Chavoshi</h1>
             <p style={styles.tldrText} className="thin_text">
               First-year Computer Engineering student at Queen's University.
               I love programming, robotics, 3D printing, and just creating cool stuff.
@@ -82,111 +156,90 @@ function App() {
         <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">
           Software Projects
         </h2>
-
-        {/* NormalNet Card */}
-        <div style={styles.projectCard}>
-          {/* Left Column (Text) */}
-          <div style={styles.leftColumn}>
-            <h3 style={styles.projectTitle} className="thick_text">
-              NormalNet - Generative ML Model
-            </h3>
-            <p style={styles.projectDescription} className="thin_text">
-              A <mark className='marked_quaternary thick_text'>Generative AI model</mark> created with <mark className='marked_tertiary thick_text'>PyTorch</mark> and <mark className='marked_tertiary thick_text'>NumPy</mark>.
-              <br></br>
-              Designed to create PBR materials from diffuse textures. This project uses a <mark className='marked_quaternary thick_text'>GAN architecture</mark> to
-              produce maps for 3D materials, <mark className='marked_primary thick_text'>reducing memory usage</mark> significantly compared to large PBR packs.
-              <br></br> <br></br>
-              The project is available on GitHub as an open-source means for users to
-              train their own models, as well as a <mark className='marked_tertiary thick_text'>Blender</mark> plugin created with <mark className='marked_tertiary thick_text'>Python</mark> to
-              empower 3D artists to create professional renders fast.
-            </p>
+        <ProjectCard
+          title="NormalNet - Generative ML Model"
+          description={
+            <>
+              A <mark className="marked_quaternary thick_text">Generative AI model</mark> created with <mark className="marked_tertiary thick_text">PyTorch</mark> and <mark className="marked_tertiary thick_text">NumPy</mark>.
+              <br />
+              Designed to create PBR materials from diffuse textures. This project uses a <mark className="marked_quaternary thick_text">GAN architecture</mark> to produce maps for 3D materials, <mark className="marked_primary thick_text">reducing memory usage</mark> significantly compared to large PBR packs.
+              <br /><br />
+              The project is available on GitHub as an open-source means for users to train their own models, as well as a <mark className="marked_tertiary thick_text">Blender</mark> plugin created with <mark className="marked_tertiary thick_text">Python</mark> to empower 3D artists to create professional renders fast.
+            </>
+          }
+          link={
             <a
               href="https://github.com/soheilchavo/NormalNet"
               target="_blank"
               rel="noopener noreferrer"
               style={styles.link}
-              className='thick_text'
+              className="thick_text"
             >
               GitHub Repo
             </a>
-          </div>
+          }
+          images={[
+            {
+              src: normalNetImage1,
+              alt: 'NormalNet Image 1',
+              title: 'Click Me!',
+              onClick: () => handleImageClick(normalNetImage1),
+              style: { top: '2%', left: '9%', width: '40%' },
+            },
+            {
+              src: normalNetImage2,
+              alt: 'NormalNet Image 2',
+              title: 'Click Me!',
+              onClick: () => handleImageClick(normalNetImage2),
+              style: { top: '50%', left: '35%', width: '30%' },
+            },
+            {
+              src: normalNetImage3,
+              alt: 'NormalNet Image 3',
+              title: 'Click Me!',
+              onClick: () => handleImageClick(normalNetImage3),
+              style: { top: '0%', left: '55%', width: '30%' },
+            },
+          ]}
+        />
 
-          {/* Right Column (Freeform Images) */}
-          <div style={styles.rightColumn}>
-            <div style={styles.imagesContainer}>
-              <img
-                src={normalNetImage1}
-                alt="NormalNet Image 1"
-                onClick={() => handleImageClick(normalNetImage1)}
-                style={styles.freeformImage1}
-                className="slightly_enlarge_hover float_y circular_image"
-                title="Click Me!"
-              />
-              <img
-                src={normalNetImage2}
-                alt="NormalNet Image 2"
-                onClick={() => handleImageClick(normalNetImage2)}
-                style={styles.freeformImage2}
-                className="slightly_enlarge_hover float_y circular_image"
-                title="Click Me!"
-              />
-              <img
-                src={normalNetImage3}
-                alt="NormalNet Image 3"
-                onClick={() => handleImageClick(normalNetImage3)}
-                style={styles.freeformImage3}
-                className="slightly_enlarge_hover float_y circular_image"
-                title="Click Me!"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* NeuralClass Card */}
-        <div style={styles.projectCard}>
-          <div style={styles.leftColumn}>
-            <h3 style={styles.projectTitle} className="thick_text">
-              NeuralClass: Custom Neural Network Engine and Visualizer
-            </h3>
-            <p style={styles.projectDescription} className="thin_text">
-              NeuralClass is a <mark className='marked_primary thick_text'>ML software</mark> created in <mark className='marked_tertiary thick_text'>Processing Java</mark>. Users can
-              create their own <mark className='marked_secondary thick_text'>MLP's and train them on any dataset</mark>.
-              The project uses no external dependencies; all algorithms were coded from scratch, including backpropagation.
-              <br></br><br></br>
-              <mark className='marked_quaternary thick_text'>Achieved 80% accuracy on the validation dataset for MNIST.</mark>
-            </p>
+        <ProjectCard
+          title="NeuralClass: Custom Neural Network Engine and Visualizer"
+          description={
+            <>
+              NeuralClass is a <mark className="marked_primary thick_text">ML software</mark> created in <mark className="marked_tertiary thick_text">Processing Java</mark>. Users can create their own <mark className="marked_secondary thick_text">MLP's and train them on any dataset</mark>. The project uses no external dependencies; all algorithms were coded from scratch, including backpropagation.
+              <br /><br />
+              <mark className="marked_quaternary thick_text">Achieved 80% accuracy on the validation dataset for MNIST.</mark>
+            </>
+          }
+          link={
             <a
               href="https://github.com/soheilchavo/NeuralClass"
               target="_blank"
               rel="noopener noreferrer"
               style={styles.link}
-              className='thick_text'
+              className="thick_text"
             >
               GitHub Repo
             </a>
-          </div>
-
-          <div style={styles.rightColumn}>
-            <div style={styles.imagesContainer}>
-              <img
-                src={neuralClassImage1}
-                alt="NeuralClass Image 1"
-                onClick={() => handleImageClick(neuralClassImage1)}
-                style={styles.freeformImage4}
-                className="slightly_enlarge_hover float_y circular_image"
-                title="Click Me!"
-              />
-              <img
-                src={neuralClassImage2}
-                alt="NeuralClass Image 2"
-                onClick={() => handleImageClick(neuralClassImage2)}
-                style={styles.freeformImage5}
-                className="slightly_enlarge_hover float_y circular_image"
-                title="Click Me!"
-              />
-            </div>
-          </div>
-        </div>
+          }
+          images={[
+            {
+              src: neuralClassImage1,
+              alt: 'NeuralClass Image 1',
+              title: 'Click Me!',
+              onClick: () => handleImageClick(neuralClassImage1),
+              style: { top: '0%', left: '0%', width: '40%' },
+            },
+            {
+              src: neuralClassImage2,
+              alt: 'NeuralClass Image 2',
+              title: 'Click Me!',
+              onClick: () => handleImageClick(neuralClassImage2),
+              style: { top: '0%', left: '50%', width: '20%' },
+            },
+          ]}
+        />
       </section>
 
       {/* HARDWARE PROJECTS SECTION */}
@@ -194,50 +247,39 @@ function App() {
         <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">
           Hardware Projects
         </h2>
-
-        <div style={styles.projectCard}>
-          <div style={styles.leftColumn}>
-            <h3 style={styles.projectTitle} className="thick_text">
-              Autonomous Firefighter Robot
-            </h3>
-            <p style={styles.projectDescription} className="thin_text">
-              Designed three <mark className='marked_primary thick_text'>PCBs</mark> (motherboard, motor board, sensor board) using <mark className='marked_tertiary thick_text'>TraxMaker</mark> & <mark className='marked_tertiary thick_text'>KiCad</mark>.
-              Soldered components, built the robot body via woodworking, and debugged with a multimeter.
-              <br></br><br></br>
-              Programmed IC’s in <mark className='marked_quaternary thick_text'>C</mark> for cohesive operation, and
-              implemented a maze-solving algorithm to navigate and extinguish randomly placed candles.
-            </p>
-          </div>
-
-          <div style={styles.rightColumn}>
-            <div style={styles.imagesContainer}>
-              <img
-                src={firefighterImage1}
-                alt="Firefighter Image 1"
-                onClick={() => handleImageClick(firefighterImage1)}
-                style={styles.freeformImage1}
-                className="slightly_enlarge_hover float_y circular_image"
-                title="Click Me!"
-              />
-              <img
-                src={firefighterImage2}
-                alt="Firefighter Image 2"
-                onClick={() => handleImageClick(firefighterImage2)}
-                style={styles.freeformImage2}
-                className="slightly_enlarge_hover float_y circular_image"
-                title="Click Me!"
-              />
-              <img
-                src={firefighterImage3}
-                alt="Firefighter Image 3"
-                onClick={() => handleImageClick(firefighterImage3)}
-                style={styles.freeformImage3}
-                className="slightly_enlarge_hover float_y circular_image"
-                title="Click Me!"
-              />
-            </div>
-          </div>
-        </div>
+        <ProjectCard
+          title="Autonomous Firefighter Robot"
+          description={
+            <>
+              Designed three <mark className="marked_primary thick_text">PCBs</mark> (motherboard, motor board, sensor board) using <mark className="marked_tertiary thick_text">TraxMaker</mark> & <mark className="marked_tertiary thick_text">KiCad</mark>. Soldered components, built the robot body via woodworking, and debugged with a multimeter.
+              <br /><br />
+              Programmed IC’s in <mark className="marked_quaternary thick_text">C</mark> for cohesive operation, and implemented a maze-solving algorithm to navigate and extinguish randomly placed candles.
+            </>
+          }
+          images={[
+            {
+              src: firefighterImage1,
+              alt: 'Firefighter Image 1',
+              title: 'Click Me!',
+              onClick: () => handleImageClick(firefighterImage1),
+              style: { top: '2%', left: '9%', width: '40%' },
+            },
+            {
+              src: firefighterImage2,
+              alt: 'Firefighter Image 2',
+              title: 'Click Me!',
+              onClick: () => handleImageClick(firefighterImage2),
+              style: { top: '50%', left: '35%', width: '30%' },
+            },
+            {
+              src: firefighterImage3,
+              alt: 'Firefighter Image 3',
+              title: 'Click Me!',
+              onClick: () => handleImageClick(firefighterImage3),
+              style: { top: '0%', left: '55%', width: '30%' },
+            },
+          ]}
+        />
       </section>
 
       {/* CONTACT SECTION */}
@@ -250,27 +292,18 @@ function App() {
         </p>
         <ul style={styles.contactList} className="thin_text">
           <li>
-            Email:{' '}
-            <a href="mailto:soheil.chavo@gmail.com" style={styles.link}>
-              soheil.chavo@gmail.com
-            </a>
+            Email: <a href="mailto:soheil.chavo@gmail.com" style={styles.link}>soheil.chavo@gmail.com</a>
           </li>
           <li>
-            GitHub:{' '}
-            <a href="https://github.com/soheilchavo" style={styles.link}>
-              @soheilchavo
-            </a>
+            GitHub: <a href="https://github.com/soheilchavo" style={styles.link}>@soheilchavo</a>
           </li>
           <li>
-            LinkedIn:{' '}
-            <a href="https://www.linkedin.com/in/soheil-chavoshi-b436a41a1/" style={styles.link}>
-              @Soheil Chavoshi
-            </a>
+            LinkedIn: <a href="https://www.linkedin.com/in/soheil-chavoshi-b436a41a1/" style={styles.link}>@Soheil Chavoshi</a>
           </li>
         </ul>
       </section>
 
-      {/* LIGHTBOX (only shown if lightboxImage is not null) */}
+      {/* LIGHTBOX */}
       {lightboxImage && (
         <div style={styles.lightboxOverlay} onClick={closeLightbox}>
           <div style={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
@@ -287,7 +320,7 @@ function App() {
 
 export default App;
 
-/* Inline styles for demonstration */
+/* Inline styles for demonstration; consider moving these to a CSS file. */
 const styles = {
   container: {
     fontFamily: 'Arial, sans-serif',
@@ -310,7 +343,6 @@ const styles = {
     fontWeight: 'bold',
   },
   header: {
-    background: `linear-gradient(135deg, ${primaryCol} 20%, ${secondaryCol})`,
     color: '#fff',
     padding: '2rem 1rem',
     display: 'flex',
@@ -373,10 +405,18 @@ const styles = {
     textAlign: 'center',
     padding: 0,
   },
-
-  /* Project Card Styles */
+  projectDescription: {
+    marginTop: 0,
+    marginBottom: '0.5rem',
+    color: 'white',
+    lineHeight: '200%',
+  },
+  link: {
+    color: '#007BFF',
+    textDecoration: 'none',
+  },
+  /* Project Card container uses a gradient defined within ProjectCard component */
   projectCard: {
-    backgroundColor: darkPrimaryCol3,
     margin: '1rem 0',
     padding: '1rem',
     borderRadius: '8px',
@@ -394,10 +434,11 @@ const styles = {
     flex: '1',
     position: 'relative',
   },
+  /* Use the "padding-top" trick for a responsive aspect ratio */
   imagesContainer: {
     width: '100%',
-    height: '300px',
     position: 'relative',
+    paddingTop: '60%', // Adjust to change aspect ratio
   },
   projectTitle: {
     marginTop: 0,
@@ -407,76 +448,14 @@ const styles = {
     fontWeight: 'bold',
     textDecoration: 'underline 1px',
   },
-  projectDescription: {
-    marginTop: 0,
-    marginBottom: '0.5rem',
-    color: 'white',
-    lineHeight: '200%',
-  },
-  link: {
-    color: '#007BFF',
-    textDecoration: 'none',
-  },
-
-  /* Freeform Images */
-  freeformImage1: {
+  /* Base style for freeform images; additional positioning is passed in via the image object */
+  freeformImage: {
     position: 'absolute',
-    top: '2%',
-    left: '9%',
-    width: '40%',
-    height: 'auto',
     cursor: 'pointer',
     transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
     boxShadow: '0 5px 8px rgba(0,0,0,0.5)',
     zIndex: 10,
   },
-  freeformImage2: {
-    position: 'absolute',
-    top: '50%',
-    left: '35%',
-    width: '30%',
-    height: 'auto',
-    cursor: 'pointer',
-    transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    zIndex: 10,
-  },
-  freeformImage3: {
-    position: 'absolute',
-    top: '0px',
-    left: '55%',
-    width: '30%',
-    height: 'auto',
-    cursor: 'pointer',
-    transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    zIndex: 10,
-  },
-  freeformImage4: {
-    position: 'absolute',
-    top: '0%',
-    left: '0%',
-    width: '40%',
-    height: 'auto',
-    cursor: 'pointer',
-    transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    zIndex: 10,
-  },
-  freeformImage5: {
-    position: 'absolute',
-    top: '0%',
-    left: '50%',
-    width: '20%',
-    height: 'auto',
-    cursor: 'pointer',
-    transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    zIndex: 10,
-  },
-  
-
-  /* Lightbox Styles */
   lightboxOverlay: {
     position: 'fixed',
     top: 0,
@@ -491,15 +470,13 @@ const styles = {
   },
   lightboxContent: {
     position: 'relative',
-    // Allow scrolling if the image is taller than the container
     overflowY: 'auto',
     maxWidth: '90vw',
     maxHeight: '90vh',
   },
   lightboxImage: {
-    // Limit the image to half the viewport size
-    maxWidth: '75vw',
-    maxHeight: '75vh',
+    maxWidth: '80vw',
+    maxHeight: '80vh',
     width: 'auto',
     height: 'auto',
     objectFit: 'contain',
