@@ -143,3 +143,17 @@
   background-color: transparent;
   text-shadow: 0px 0px 0px var(--quaternaryCol), 0 0 30px var(--quaternaryCol), 0 0 10px var(--quaternaryCol);
 }
+
+.circular_image {
+  object-fit:fill ;  /* Crop the image instead of stretching */
+  
+  border-radius: 20%; /* Fully circular */
+  transition-duration: 0.3s; /* Smooth transition on hover */
+  cursor: pointer;
+  box-shadow: 0 5px 8px rgba(0,0,0,0.5);
+}
+
+.circular_image:hover {
+  border-radius: 16%;
+  transition-duration: 0.3s; /* Smooth transition on hover */
+}

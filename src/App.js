@@ -19,17 +19,18 @@ const darkPrimaryCol2 = 'rgb(25, 40, 40)';
 const darkPrimaryCol3 = 'rgb(55, 70, 70)';
 const secondaryCol = 'rgb(200, 80, 66)';
 
-function App() {
-  // Track which image (if any) is enlarged in the NormalNet card
-  const [enlarged, setEnlarged] = useState(null);
+const img_border_radius = '100%';
+const hover_border_radius = '5%';
 
-  // Toggle which image is enlarged
-  const handleImageClick = (img) => {
-    if (enlarged === img) {
-      setEnlarged(null); // if the same image is clicked again, shrink it
-    } else {
-      setEnlarged(img);
-    }
+function App() {
+  const [lightboxImage, setLightboxImage] = useState(null);
+
+  const handleImageClick = (imgUrl) => {
+    setLightboxImage(imgUrl);
+  };
+
+  const closeLightbox = () => {
+    setLightboxImage(null);
   };
 
   useEffect(() => {
@@ -69,20 +70,20 @@ function App() {
             </h1>
             <p style={styles.tldrText} className="thin_text">
               First-year Computer Engineering student at Queen's University.
-              I love programming, robotics, 3d Printing, and just creating cool stuff. 
+              I love programming, robotics, 3D printing, and just creating cool stuff.
               Check out some of my projects below, and reach out using my email.
             </p>
           </div>
         </div>
       </header>
 
-      {/* PROJECTS SECTION */}
+      {/* SOFTWARE PROJECTS SECTION */}
       <section id="softwareprojects" style={styles.section}>
         <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">
           Software Projects
         </h2>
 
-        {/* NormalNet Card with Freeform Images */}
+        {/* NormalNet Card */}
         <div style={styles.projectCard}>
           {/* Left Column (Text) */}
           <div style={styles.leftColumn}>
@@ -90,13 +91,13 @@ function App() {
               NormalNet - Generative ML Model
             </h3>
             <p style={styles.projectDescription} className="thin_text">
-              A <mark className='marked_quaternary thick_text'>Generative AI model</mark> created with <mark className='marked_tertiary thick_text'>PyTorch</mark> and <mark className='marked_tertiary thick_text'>NumPy</mark>. 
+              A <mark className='marked_quaternary thick_text'>Generative AI model</mark> created with <mark className='marked_tertiary thick_text'>PyTorch</mark> and <mark className='marked_tertiary thick_text'>NumPy</mark>.
               <br></br>
-              Designed to create PBR materials from diffuse textures.This project uses a <mark className='marked_quaternary thick_text'>GAN architecture</mark> to
-              produce maps for 3D materials, <mark className='marked_primary thick_text'> reducing memmory ussage by up to 5x as
-              traditional methods </mark> of storing large PBR packs. <br></br> <br></br>
+              Designed to create PBR materials from diffuse textures. This project uses a <mark className='marked_quaternary thick_text'>GAN architecture</mark> to
+              produce maps for 3D materials, <mark className='marked_primary thick_text'>reducing memory usage</mark> significantly compared to large PBR packs.
+              <br></br> <br></br>
               The project is available on GitHub as an open-source means for users to
-              train their own models, as well as a <mark className='marked_tertiary thick_text'>Blender</mark> plugin created with <mark className='marked_tertiary thick_text'>Python</mark> to 
+              train their own models, as well as a <mark className='marked_tertiary thick_text'>Blender</mark> plugin created with <mark className='marked_tertiary thick_text'>Python</mark> to
               empower 3D artists to create professional renders fast.
             </p>
             <a
@@ -116,50 +117,41 @@ function App() {
               <img
                 src={normalNetImage1}
                 alt="NormalNet Image 1"
-                onClick={() => handleImageClick('image1')}
-                style={{
-                  ...styles.freeformImage1,
-                  ...(enlarged === 'image1' ? styles.enlargedImage : {}),
-                }}
-                className="slightly_enlarge_hover float_y"
+                onClick={() => handleImageClick(normalNetImage1)}
+                style={styles.freeformImage1}
+                className="slightly_enlarge_hover float_y circular_image"
                 title="Click Me!"
               />
               <img
                 src={normalNetImage2}
                 alt="NormalNet Image 2"
-                onClick={() => handleImageClick('image2')}
-                style={{
-                  ...styles.freeformImage2,
-                  ...(enlarged === 'image2' ? styles.enlargedImage : {}),
-                }}
-                className="slightly_enlarge_hover float_y"
+                onClick={() => handleImageClick(normalNetImage2)}
+                style={styles.freeformImage2}
+                className="slightly_enlarge_hover float_y circular_image"
                 title="Click Me!"
               />
               <img
                 src={normalNetImage3}
                 alt="NormalNet Image 3"
-                onClick={() => handleImageClick('image3')}
-                style={{
-                  ...styles.freeformImage3,
-                  ...(enlarged === 'image3' ? styles.enlargedImage : {}),
-                }}
-                className="slightly_enlarge_hover float_y"
+                onClick={() => handleImageClick(normalNetImage3)}
+                style={styles.freeformImage3}
+                className="slightly_enlarge_hover float_y circular_image"
                 title="Click Me!"
               />
             </div>
           </div>
         </div>
-        {/* NeuralClass Card with Freeform Images */}
+
+        {/* NeuralClass Card */}
         <div style={styles.projectCard}>
-          {/* Left Column (Text) */}
           <div style={styles.leftColumn}>
             <h3 style={styles.projectTitle} className="thick_text">
               NeuralClass: Custom Neural Network Engine and Visualizer
             </h3>
             <p style={styles.projectDescription} className="thin_text">
-              NeuralClass is a <mark className='marked_primary thick_text'>ML software</mark> created in <mark className='marked_tertiary thick_text'>Processing Java</mark>. Users are able
-              to create their own <mark className='marked_secondary thick_text'>MLP's and train them on any dataset</mark>. The project uses no
-              dependencies, and all algorithms were programmed from scratch, including backpropagation.
+              NeuralClass is a <mark className='marked_primary thick_text'>ML software</mark> created in <mark className='marked_tertiary thick_text'>Processing Java</mark>. Users can
+              create their own <mark className='marked_secondary thick_text'>MLP's and train them on any dataset</mark>.
+              The project uses no external dependencies; all algorithms were coded from scratch, including backpropagation.
               <br></br><br></br>
               <mark className='marked_quaternary thick_text'>Achieved 80% accuracy on the validation dataset for MNIST.</mark>
             </p>
@@ -174,29 +166,22 @@ function App() {
             </a>
           </div>
 
-          {/* Right Column (Freeform Images) */}
           <div style={styles.rightColumn}>
             <div style={styles.imagesContainer}>
               <img
                 src={neuralClassImage1}
                 alt="NeuralClass Image 1"
-                onClick={() => handleImageClick('image1')}
-                style={{
-                  ...styles.freeformImage4,
-                  ...(enlarged === 'image1' ? styles.enlargedImage : {}),
-                }}
-                className="slightly_enlarge_hover float_y"
+                onClick={() => handleImageClick(neuralClassImage1)}
+                style={styles.freeformImage4}
+                className="slightly_enlarge_hover float_y circular_image"
                 title="Click Me!"
               />
               <img
                 src={neuralClassImage2}
                 alt="NeuralClass Image 2"
-                onClick={() => handleImageClick('image3')}
-                style={{
-                  ...styles.freeformImage5,
-                  ...(enlarged === 'image3' ? styles.enlargedImage : {}),
-                }}
-                className="slightly_enlarge_hover float_y"
+                onClick={() => handleImageClick(neuralClassImage2)}
+                style={styles.freeformImage5}
+                className="slightly_enlarge_hover float_y circular_image"
                 title="Click Me!"
               />
             </div>
@@ -204,64 +189,50 @@ function App() {
         </div>
       </section>
 
-
       {/* HARDWARE PROJECTS SECTION */}
       <section id="hardwareprojects" style={styles.section}>
         <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">
           Hardware Projects
         </h2>
 
-        {/* NormalNet Card with Freeform Images */}
         <div style={styles.projectCard}>
-          {/* Left Column (Text) */}
           <div style={styles.leftColumn}>
             <h3 style={styles.projectTitle} className="thick_text">
               Autonomous Firefighter Robot
             </h3>
             <p style={styles.projectDescription} className="thin_text">
-              Designed three <mark className='marked_primary thick_text'>PCBs</mark>, including a motherboard, motor board, and sensor board, using <mark className='marked_tertiary thick_text'>TraxMaker</mark> and <mark className='marked_tertiary thick_text'>KiCad</mark>
-              , <mark className='marked_secondary thick_text'>Soldered components</mark>, built the robot's body through woodworking, debugged sensors and components with a multimeter.
+              Designed three <mark className='marked_primary thick_text'>PCBs</mark> (motherboard, motor board, sensor board) using <mark className='marked_tertiary thick_text'>TraxMaker</mark> & <mark className='marked_tertiary thick_text'>KiCad</mark>.
+              Soldered components, built the robot body via woodworking, and debugged with a multimeter.
               <br></br><br></br>
-              Programmed IC’s in <mark className='marked_quaternary thick_text'>C</mark> to function cohesively, and
-              developed a maze-solving algorithm that enabled the robot to navigate and extinguish randomly placed candles
-
+              Programmed IC’s in <mark className='marked_quaternary thick_text'>C</mark> for cohesive operation, and
+              implemented a maze-solving algorithm to navigate and extinguish randomly placed candles.
             </p>
           </div>
 
-          {/* Right Column (Freeform Images) */}
           <div style={styles.rightColumn}>
             <div style={styles.imagesContainer}>
               <img
                 src={firefighterImage1}
                 alt="Firefighter Image 1"
-                onClick={() => handleImageClick('image1')}
-                style={{
-                  ...styles.freeformImage1,
-                  ...(enlarged === 'image1' ? styles.enlargedImage : {}),
-                }}
-                className="slightly_enlarge_hover float_y"
+                onClick={() => handleImageClick(firefighterImage1)}
+                style={styles.freeformImage1}
+                className="slightly_enlarge_hover float_y circular_image"
                 title="Click Me!"
               />
               <img
                 src={firefighterImage2}
-                alt="Firefighter Image 1"
-                onClick={() => handleImageClick('image2')}
-                style={{
-                  ...styles.freeformImage2,
-                  ...(enlarged === 'image2' ? styles.enlargedImage : {}),
-                }}
-                className="slightly_enlarge_hover float_y"
+                alt="Firefighter Image 2"
+                onClick={() => handleImageClick(firefighterImage2)}
+                style={styles.freeformImage2}
+                className="slightly_enlarge_hover float_y circular_image"
                 title="Click Me!"
               />
               <img
                 src={firefighterImage3}
                 alt="Firefighter Image 3"
-                onClick={() => handleImageClick('image3')}
-                style={{
-                  ...styles.freeformImage3,
-                  ...(enlarged === 'image3' ? styles.enlargedImage : {}),
-                }}
-                className="slightly_enlarge_hover float_y"
+                onClick={() => handleImageClick(firefighterImage3)}
+                style={styles.freeformImage3}
+                className="slightly_enlarge_hover float_y circular_image"
                 title="Click Me!"
               />
             </div>
@@ -271,11 +242,13 @@ function App() {
 
       {/* CONTACT SECTION */}
       <section id="contact" style={styles.contactSection}>
-        <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">Contact</h2>
-        <p style={styles.sectionText} className='thin_text'>
+        <h2 style={styles.sectionTitle} className="type_effect futuristic_text primary_secondary_hover">
+          Contact
+        </h2>
+        <p style={styles.sectionText} className="thin_text">
           If you’d like to reach out, feel free to send me an email or connect on LinkedIn and GitHub!
         </p>
-        <ul style={styles.contactList} className='thin_text'>
+        <ul style={styles.contactList} className="thin_text">
           <li>
             Email:{' '}
             <a href="mailto:soheil.chavo@gmail.com" style={styles.link}>
@@ -296,14 +269,25 @@ function App() {
           </li>
         </ul>
       </section>
+
+      {/* LIGHTBOX (only shown if lightboxImage is not null) */}
+      {lightboxImage && (
+        <div style={styles.lightboxOverlay} onClick={closeLightbox}>
+          <div style={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
+            <button style={styles.closeButton} onClick={closeLightbox}>
+              Close
+            </button>
+            <img src={lightboxImage} alt="Enlarged" style={styles.lightboxImage} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default App;
 
-/* Inline styles for demonstration; 
-   consider moving these into a separate CSS file or using a CSS framework. */
+/* Inline styles for demonstration */
 const styles = {
   container: {
     fontFamily: 'Arial, sans-serif',
@@ -408,11 +392,11 @@ const styles = {
   },
   rightColumn: {
     flex: '1',
-    position: 'relative', // needed for absolute positioning of images
+    position: 'relative',
   },
   imagesContainer: {
     width: '100%',
-    height: '300px', // adjust as needed
+    height: '300px',
     position: 'relative',
   },
   projectTitle: {
@@ -421,18 +405,13 @@ const styles = {
     color: 'white',
     fontSize: '1.5rem',
     fontWeight: 'bold',
-    textDecoration: 'underline 1px'
+    textDecoration: 'underline 1px',
   },
   projectDescription: {
     marginTop: 0,
     marginBottom: '0.5rem',
     color: 'white',
-    lineHeight: '200%'
-  },
-  skillsUsed: {
-    fontStyle: 'italic',
-    marginBottom: '0.5rem',
-    color: secondaryCol,
+    lineHeight: '200%',
   },
   link: {
     color: '#007BFF',
@@ -446,11 +425,10 @@ const styles = {
     left: '9%',
     width: '40%',
     height: 'auto',
-    borderRadius: '8px',
     cursor: 'pointer',
     transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
     boxShadow: '0 5px 8px rgba(0,0,0,0.5)',
-    zIndex: 10
+    zIndex: 10,
   },
   freeformImage2: {
     position: 'absolute',
@@ -458,11 +436,10 @@ const styles = {
     left: '35%',
     width: '30%',
     height: 'auto',
-    borderRadius: '8px',
     cursor: 'pointer',
     transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
     boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    zIndex: 10
+    zIndex: 10,
   },
   freeformImage3: {
     position: 'absolute',
@@ -470,11 +447,10 @@ const styles = {
     left: '55%',
     width: '30%',
     height: 'auto',
-    borderRadius: '8px',
     cursor: 'pointer',
     transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
     boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    zIndex: 10
+    zIndex: 10,
   },
   freeformImage4: {
     position: 'absolute',
@@ -482,11 +458,10 @@ const styles = {
     left: '0%',
     width: '40%',
     height: 'auto',
-    borderRadius: '8px',
     cursor: 'pointer',
     transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
     boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    zIndex: 10
+    zIndex: 10,
   },
   freeformImage5: {
     position: 'absolute',
@@ -494,14 +469,54 @@ const styles = {
     left: '50%',
     width: '20%',
     height: 'auto',
-    borderRadius: '8px',
     cursor: 'pointer',
     transition: 'transform 0.3s, width 0.3s, left 0.3s, top 0.3s',
     boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    zIndex: 10
+    zIndex: 10,
   },
-  enlargedImage: {
+  
+
+  /* Lightbox Styles */
+  lightboxOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     zIndex: 999,
-    transform: 'scale(1.6)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lightboxContent: {
+    position: 'relative',
+    // Allow scrolling if the image is taller than the container
+    overflowY: 'auto',
+    maxWidth: '90vw',
+    maxHeight: '90vh',
+  },
+  lightboxImage: {
+    // Limit the image to half the viewport size
+    maxWidth: '75vw',
+    maxHeight: '75vh',
+    width: 'auto',
+    height: 'auto',
+    objectFit: 'contain',
+    borderRadius: '8px',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.8)',
+    display: 'block',
+    margin: '0 auto',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: '0.5rem',
+    right: '0.5rem',
+    backgroundColor: '#fff',
+    border: 'none',
+    padding: '0.5rem 1rem',
+    cursor: 'pointer',
+    borderRadius: '4px',
+    fontWeight: 'bold',
   },
 };
